@@ -1,0 +1,26 @@
+services:
+  uno:
+    build: .
+    container_name: uno-scoreboard
+    #ports:
+    #  - "8080:80"
+    environment:
+      # WICHTIG: In Produktion ein sicheres Passwort setzen!
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD:-changeme}"
+      # Zeitzone für die Tages-/Kalenderstatistik
+      TZ: "${TZ:-Europe/Berlin}"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uno.entrypoints=https"
+      - "traefik.http.routers.uno.rule=Host(`uno.cloudnx.de`)"
+      - "traefik.http.services.uno.loadbalancer.server.port=80"
+      - "traefik.http.routers.uno.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.uno.middlewares=security-headers@file"
+
+networks:
+  default:
+    name: proxy
+    external: true

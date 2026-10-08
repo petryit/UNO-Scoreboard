@@ -1,0 +1,22 @@
+# Abhängigkeiten
+node_modules/
+
+# Laufzeitdaten (SQLite)
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Environment / Secrets
+.env
+
+# Systemdateien
+.DS_Store
+
+# Logs
+npm-debug.log*
+*.log
+
+# Tooling / lokale Testartefakte
+.playwright-mcp/
+.claude/
